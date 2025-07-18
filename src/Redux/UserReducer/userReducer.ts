@@ -21,7 +21,7 @@ interface IUserAction {
   payload?: IUser;
 }
 
-//todo reduce precisa retorna o estado atualizado
+// todo reduce precisa retorna o estado atualizado
 // ou seja, apos a aplicaão da action
 export function userReducer(
   state: IUserState = initialState,

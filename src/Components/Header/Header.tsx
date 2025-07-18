@@ -4,7 +4,7 @@ import { FiLogIn, FiLogOut, FiShoppingCart } from "react-icons/fi";
 import { Cart } from "../Cart/Cart";
 import { useDispatch, useSelector, UseSelector } from "react-redux";
 import { RootReducer } from "../../Redux/root-reduce";
-import { IUser } from "../../Redux/UserReducer/reducer";
+import { IUser } from "../../Redux/UserReducer/userReducer";
 
 const LogInIcon = FiLogIn as unknown as React.FC;
 const LogOutIcon = FiLogOut as unknown as React.FC;
