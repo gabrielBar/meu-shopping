@@ -3,7 +3,7 @@ import * as S from "./style";
 import { FiLogIn, FiLogOut, FiShoppingCart } from "react-icons/fi";
 import { Cart } from "../Cart/Cart";
 import { useDispatch, useSelector, UseSelector } from "react-redux";
-import { RootReducer } from "../../Redux/root-reduce";
+import { rootReducer, RootReducer } from "../../Redux/root-reduce";
 import { IUser } from "../../Redux/UserReducer/userReducer";
 
 const LogInIcon = FiLogIn as unknown as React.FC;
@@ -15,25 +15,25 @@ export const Header: React.FC = () => {
     (rootReduce: RootReducer) => rootReduce.userReducer
   );
 
-  // const [isLogged, SetIsLogged] = useState(false);
+  const { cart } = useSelector(
+    (rootReducer: RootReducer) => rootReducer.cartReducer
+  );
+
   const [showCart, SetShowCart] = useState(false);
   const isLogged = user != null;
 
   const dispatch = useDispatch();
+
   function handleUserAuth() {
     const usuarioEstaLogado = user !== null;
     if (!usuarioEstaLogado) {
       //dispatch action de login
       const usuario: IUser = { name: "gabriel", email: "gabriel@email.com" };
-      const resp = dispatch({ type: "user/login", payload: usuario });
-      // SetIsLogged(true);
+      dispatch({ type: "user/login", payload: usuario });
     } else {
-      const resp = dispatch({ type: "user/logoff" });
-      // SetIsLogged(false);
+      dispatch({ type: "user/logoff" });
     }
-    console.log(user);
   }
-  // console.log(user);
 
   return (
     <S.Header>
@@ -67,7 +67,13 @@ export const Header: React.FC = () => {
           </S.CartButton>
         </S.ButtonsWrapper>
       </S.Wrapper>
-      <Cart showCart={showCart} />
+      <Cart
+        showCart={showCart}
+        produtos={cart}
+        onToggle={() => {
+          SetShowCart(!showCart);
+        }}
+      ></Cart>
     </S.Header>
   );
 };

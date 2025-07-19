@@ -1,6 +1,8 @@
 import * as S from "./styles";
 import { FiShoppingCart } from "react-icons/fi";
 import { IProduto } from "../../Data/Products";
+import { useDispatch, useSelector } from "react-redux";
+import { rootReducer, RootReducer } from "../../Redux/root-reduce";
 
 const ShoppingCartIcon = FiShoppingCart as unknown as React.FC;
 interface IProductCardProps {
@@ -8,6 +10,27 @@ interface IProductCardProps {
 }
 
 export const ProductCard: React.FC<IProductCardProps> = ({ product }) => {
+  const { cart } = useSelector(
+    (rootReducer: RootReducer) => rootReducer.cartReducer
+  );
+
+  const dispatch = useDispatch();
+
+  function handleAddProductToCart() {
+    dispatch({
+      type: "cart/add-produto",
+      payload: product,
+    });
+  }
+
+  function handleRemoveProductToCart() {
+    dispatch({
+      type: "cart/remove-produto",
+      payload: product,
+    });
+  }
+
+  const isInCart = cart.some((item) => item.id === product.id);
   return (
     <S.Card>
       <S.ProductImage
@@ -20,10 +43,17 @@ export const ProductCard: React.FC<IProductCardProps> = ({ product }) => {
         <S.Price>$ {product.price}</S.Price>
       </S.ReviewPriceWrapper>
       <S.ButtonsWrapper>
-        <S.AddToCartButton>
-          Adicionar ao Carrinho
-          <ShoppingCartIcon></ShoppingCartIcon>
-        </S.AddToCartButton>
+        {isInCart ? (
+          <S.RemoveFromCartButton onClick={handleRemoveProductToCart}>
+            Remove ao Carrinho
+            <ShoppingCartIcon></ShoppingCartIcon>
+          </S.RemoveFromCartButton>
+        ) : (
+          <S.AddToCartButton onClick={handleAddProductToCart}>
+            Adicionar ao Carrinho
+            <ShoppingCartIcon></ShoppingCartIcon>
+          </S.AddToCartButton>
+        )}
       </S.ButtonsWrapper>
     </S.Card>
   );
