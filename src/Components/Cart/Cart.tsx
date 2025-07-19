@@ -4,6 +4,7 @@ import { FiTrash } from "react-icons/fi";
 import * as S from "./styles";
 import { useDispatch } from "react-redux";
 import { rootReducer, RootReducer } from "../../Redux/root-reduce";
+import { removeProduto } from "../../Redux/CartReducer/cart-slice";
 
 interface ICartProps {
   showCart: boolean;
@@ -35,15 +36,13 @@ export const Cart: React.FC<ICartProps> = ({
               </S.imagemContainer>
               <div className="produto-info">
                 <h1 className="produto-name">
-                  {produto.title} - $ {produto.price}
+                  {produto.title} $ {produto.price}
                 </h1>
               </div>
               <div>
                 <S.DeleteButton
                   title="Deleta esse item"
-                  onClick={() =>
-                    dispatch({ type: "cart/remove-produto", payload: produto })
-                  }
+                  onClick={() => dispatch(removeProduto(produto))}
                 >
                   <TrashIcon />
                 </S.DeleteButton>
