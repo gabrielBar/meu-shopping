@@ -2,13 +2,13 @@ import exp from "constants";
 import { styled } from "styled-components";
 
 interface IContainerCartProps {
-  showCart: boolean;
+  $showCart: boolean;
 }
 export const Container = styled.aside<IContainerCartProps>`
   position: fixed;
   top: 0;
   /* right: -350px; */
-  right: ${(props) => (props.showCart ? "0px" : "-350px")};
+  right: ${(props) => (props.$showCart ? "0px" : "-350px")};
 
   transition: right 0.4s;
   width: 350px;

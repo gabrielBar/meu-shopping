@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { IProduto } from "../../Data/Products";
 import { FiTrash } from "react-icons/fi";
 import * as S from "./styles";
 import { useDispatch } from "react-redux";
-import { rootReducer, RootReducer } from "../../Redux/root-reduce";
+
 import { removeProduto } from "../../Redux/CartReducer/cart-slice";
 
 interface ICartProps {
@@ -21,7 +20,7 @@ export const Cart: React.FC<ICartProps> = ({
   const dispatch = useDispatch();
 
   return (
-    <S.Container showCart={showCart}>
+    <S.Container $showCart={showCart}>
       <S.titleContainer>
         <S.Title>Carrinho</S.Title>
         <button onClick={() => onToggle()}>X</button>
@@ -41,6 +40,8 @@ export const Cart: React.FC<ICartProps> = ({
               </div>
               <div>
                 <S.DeleteButton
+                  data-testid={`btn-remove-${produto.id}`}
+                  data-role="btn-delete"
                   title="Deleta esse item"
                   onClick={() => dispatch(removeProduto(produto))}
                 >
@@ -53,7 +54,7 @@ export const Cart: React.FC<ICartProps> = ({
       </S.ListaProdutos>
       <S.Totalizador>
         <div>Total: </div>
-        <strong>
+        <strong data-testid="totalizador">
           ${" "}
           {produtos
             ?.reduce((acc, produto) => acc + produto.price, 0)
